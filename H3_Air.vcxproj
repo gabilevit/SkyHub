@@ -143,8 +143,10 @@
     <ClInclude Include="Airport.h" />
     <ClInclude Include="AirportManager.h" />
     <ClInclude Include="Date.h" />
+    <ClInclude Include="def.h" />
     <ClInclude Include="Flight.h" />
     <ClInclude Include="General.h" />
+    <ClInclude Include="list.h" />
     <ClInclude Include="Plane.h" />
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +156,7 @@
     <ClCompile Include="Date.c" />
     <ClCompile Include="Flight.c" />
     <ClCompile Include="General.c" />
+    <ClCompile Include="list.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="Plane.c" />
   </ItemGroup>
