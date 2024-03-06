@@ -8,9 +8,7 @@
 
 int	initManager(AirportManager* pManager)
 {
-	pManager->airportsCount = 0;
-	pManager->airportsArray = NULL;
-
+	L_init(&pManager->airportsList);
 	return 1;
 }
 
@@ -27,19 +25,46 @@ int	addAirport(AirportManager* pManager)
 		return 0;
 	}
 
-	pManager->airportsArray = (Airport**)realloc(pManager->airportsArray,
-		(pManager->airportsCount + 1) * sizeof(Airport*));
-	if (!pManager->airportsArray)
+	NODE* pNode;
+	pNode = &pManager->airportsList.head;
+
+	// if its the first node
+	if (pNode->next == NULL)
 	{
-		freeAirport(pPort);
-		free(pPort);
-		return 0;
+		L_insert(pNode, pPort);
+		return 1;
+	}	
+
+	NODE* tmpNode;
+	tmpNode = pNode;
+	// after the head (first valid node)
+	pNode = pNode->next;
+
+	while (pNode != NULL)
+	{
+		if (compareAirportByAirportCode(pPort, pNode->key) < 0)
+		{
+			L_insert(tmpNode, pPort);
+			return 1;
+		}
+		pNode = pNode->next;
+		tmpNode = tmpNode->next;	
 	}
-
-
-	pManager->airportsArray[pManager->airportsCount] = pPort;
-	pManager->airportsCount++;
+	L_insert(tmpNode, pPort);
 	return 1;
+	//pManager->airportsArray = (Airport**)realloc(pManager->airportsArray,
+	//	(pManager->airportsCount + 1) * sizeof(Airport*));
+	//if (!pManager->airportsArray)
+	//{
+	//	freeAirport(pPort);
+	//	free(pPort);
+	//	return 0;
+	//}
+
+
+	//pManager->airportsArray[pManager->airportsCount] = pPort;
+	//pManager->airportsCount++;
+	//return 1;
 }
 
 int  initAirport(Airport* pPort, AirportManager* pManager)
@@ -58,11 +83,16 @@ int  initAirport(Airport* pPort, AirportManager* pManager)
 
 Airport* findAirportByCode(const AirportManager* pManager, const char* code)
 {
-	for (int i = 0; i < pManager->airportsCount; i++)
+	const NODE* pRes = L_find(pManager->airportsList.head.next, code, isNOTAirportCode);
+	if (pRes)
+	{
+		return pRes->key;
+	}
+	/*for (int i = 0; i < pManager->airportsCount; i++)
 	{
 		if (isAirportCode(pManager->airportsArray[i], code))
 			return pManager->airportsArray[i];
-	}
+	}*/
 	return NULL;
 }
 
@@ -79,12 +109,42 @@ int checkUniqeCode(const char* code, const AirportManager* pManager)
 
 void	printAirports(const AirportManager* pManager)
 {
-	printf("there are %d airports\n", pManager->airportsCount);
-	for (int i = 0; i < pManager->airportsCount; i++)
+	int airportsCount = countAirports(pManager);
+	printf("there are %d airports\n", airportsCount);
+
+	NODE* pNode = pManager->airportsList.head.next;
+
+	if (!pNode)
+		return;
+
+	while (pNode)
 	{
-		printAirport(pManager->airportsArray[i]);
-		printf("\n");
+		printAirport(pNode->key);
+		pNode = pNode->next;
 	}
+
+	/*for (int i = 0; i < airportsCount; i++)
+	{
+		printAirport();
+		printf("\n");
+	}*/
+}
+
+int countAirports(AirportManager* pManager)
+{
+	int count = 0;
+	NODE* pNode = pManager->airportsList.head.next;
+
+	if (!pNode)
+		return 0;
+
+	while (pNode != NULL)
+	{
+		pNode = pNode->next;
+		count++;
+	}
+
+	return count;
 }
 
 void	freeManager(AirportManager* pManager)
@@ -95,10 +155,22 @@ void	freeManager(AirportManager* pManager)
 
 void	freeAirportArr(AirportManager* pManager)
 {
-	for (int i = 0; i < pManager->airportsCount; i++)
+	NODE* pNode = pManager->airportsList.head.next;
+
+	if (!pNode)
+		return;
+
+	while (!pNode)
+	{
+		freeAirport(pNode->key);
+		free(pNode->key);
+		pNode = pNode->next;
+	}
+	L_free(&pManager->airportsList, free);
+	/*for (int i = 0; i < pManager->airportsCount; i++)
 	{
 		freeAirport(pManager->airportsArray[i]);
 		free(pManager->airportsArray[i]);
 	}
-	free(pManager->airportsArray);
+	free(pManager->airportsArray);*/
 }

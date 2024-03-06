@@ -12,11 +12,13 @@ typedef struct
 
 int		isSameAirport(const Airport* pPort1, const Airport* pPort2);
 int		isAirportCode(const Airport* pPort1, const char* code);
+int     isNOTAirportCode(const Airport* pPort1, const char* code);
 int		initAirportNoCode(Airport* pPort);
 int		getAirportName(Airport* pPort);
 char* allocateRightLength(char** wordsArray, int count, int totalLength);
 void	changeNameOneWord(char* name, const char* word);
 void	changeName(char* name, int count, char** wordsArray);
+int		compareAirportByAirportCode(const void* v1, const void* v2);
 
 void    getAirportCode(char* code);
 void	printAirport(const Airport* pPort);

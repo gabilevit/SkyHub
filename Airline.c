@@ -18,7 +18,7 @@ void	initAirline(Airline* pComp)
 
 int	addFlight(Airline* pComp, const AirportManager* pManager)
 {
-	if (pManager->airportsCount < 2)
+	if (countAirports(pManager) < 2)
 	{
 		printf("There are not enough airport to set a flight\n");
 		return 0;
@@ -132,4 +132,18 @@ void	freeCompany(Airline* pComp)
 	free(pComp->flightArr);
 	free(pComp->planeArr);
 	free(pComp->name);
+}
+
+eSortType	getSortType()
+{
+	int option;
+	printf("\n\n");
+	do {
+		printf("Please enter one of the following types\n");
+		for (int i = 0; i < eNofSortTypes; i++)
+			printf("%d for %s\n", i, SortTypeStr[i]);
+		scanf("%d", &option);
+	} while (option < 0 || option >= eNofSortTypes);
+	getchar();
+	return (eSortType)option;
 }

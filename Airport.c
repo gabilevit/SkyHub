@@ -28,6 +28,14 @@ int	isAirportCode(const Airport* pPort1, const char* code)
 	return 0;
 }
 
+int isNOTAirportCode(const Airport* pPort1, const char* code)
+{
+	int flag = isAirportCode(pPort1, code);
+	if (flag)
+		return 0;
+	else return 1;
+}
+
 int	initAirportNoCode(Airport* pPort)
 {
 	if (!getAirportName(pPort))
@@ -155,6 +163,14 @@ void getAirportCode(char* code)
 	} while (!ok);
 
 	strcpy(code, temp);
+}
+
+int		compareAirportByAirportCode(const void* v1, const void* v2)
+{
+	const Airport* a1 = (const Airport*)v1;
+	const Airport* a2 = (const Airport*)v2;
+
+	return strcmp(a1->code, a2->code);
 }
 
 void	freeAirport(Airport* pPort)

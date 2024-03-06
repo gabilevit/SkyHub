@@ -1,10 +1,5 @@
-﻿  Airline.c
-  Airport.c
-  AirportManager.c
-  Date.c
-  Flight.c
-  General.c
-  main.c
-  Plane.c
-  Generating Code...
+﻿  AirportManager.c
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\AirportManager.c(86,66): warning C4090: 'function': different 'const' qualifiers
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\AirportManager.c(112,44): warning C4090: 'function': different 'const' qualifiers
+  LINK : C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\x64\Debug\H3_Air.exe not found or not built by the last incremental link; performing full link
   H3_Air.vcxproj -> C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\x64\Debug\H3_Air.exe
