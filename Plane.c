@@ -74,3 +74,10 @@ void			freePlane(Plane* pPlane)
 {
 	//nothing to free
 }
+
+int savePlaneToFile(FILE* f, Plane* pPlane)
+{
+	if (fwrite(pPlane, sizeof(Plane), 1, f) != 1)
+		return 0;
+	return 1;
+}

@@ -1,5 +1,41 @@
-﻿  AirportManager.c
-C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\AirportManager.c(86,66): warning C4090: 'function': different 'const' qualifiers
-C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\AirportManager.c(112,44): warning C4090: 'function': different 'const' qualifiers
-  LINK : C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\x64\Debug\H3_Air.exe not found or not built by the last incremental link; performing full link
-  H3_Air.vcxproj -> C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\x64\Debug\H3_Air.exe
+﻿  Airline.c
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Airline.c(22,28): warning C4090: 'function': different 'const' qualifiers
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Airline.c(186,88): warning C4047: 'function': '_CoreCrtNonSecureSearchSortCompareFunction' differs in levels of indirection from 'void *(__cdecl *)(const void *,const void *)'
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Airline.c(186,63): warning C4024: 'qsort': different types for formal and actual parameter 4
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Airline.c(191,86): warning C4047: 'function': '_CoreCrtNonSecureSearchSortCompareFunction' differs in levels of indirection from 'void *(__cdecl *)(const void *,const void *)'
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Airline.c(191,63): warning C4024: 'qsort': different types for formal and actual parameter 4
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Airline.c(196,82): warning C4047: 'function': '_CoreCrtNonSecureSearchSortCompareFunction' differs in levels of indirection from 'void *(__cdecl *)(const void *,const void *)'
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Airline.c(196,63): warning C4024: 'qsort': different types for formal and actual parameter 4
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Airline.c(199,26): warning C4028: formal parameter 1 different from declaration
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Airline.c(214,117): warning C4047: 'function': '_CoreCrtNonSecureSearchSortCompareFunction' differs in levels of indirection from 'void *(__cdecl *)(const void *,const void *)'
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Airline.c(214,92): warning C4024: 'bsearch': different types for formal and actual parameter 5
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Airline.c(226,115): warning C4047: 'function': '_CoreCrtNonSecureSearchSortCompareFunction' differs in levels of indirection from 'void *(__cdecl *)(const void *,const void *)'
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Airline.c(226,92): warning C4024: 'bsearch': different types for formal and actual parameter 5
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Airline.c(238,111): warning C4047: 'function': '_CoreCrtNonSecureSearchSortCompareFunction' differs in levels of indirection from 'void *(__cdecl *)(const void *,const void *)'
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Airline.c(238,92): warning C4024: 'bsearch': different types for formal and actual parameter 5
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Airline.c(289,48): warning C4047: 'function': 'Flight *' differs in levels of indirection from 'Flight **'
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Airline.c(289,28): warning C4024: 'saveFlightToFile': different types for formal and actual parameter 2
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Airline.c(258,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Airport.c
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Airport.c(198,14): warning C4553: '==': result of expression not used; did you intend '='?
+  AirportManager.c
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\AirportManager.c(90,66): warning C4090: 'function': different 'const' qualifiers
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\AirportManager.c(116,44): warning C4090: 'function': different 'const' qualifiers
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\AirportManager.c(190,35): warning C4090: 'function': different 'const' qualifiers
+  Date.c
+  Flight.c
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Flight.c(80,47): warning C4047: 'return': 'void *' differs in levels of indirection from 'int'
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Flight.c(88,43): warning C4047: 'return': 'void *' differs in levels of indirection from 'int'
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Flight.c(102,43): warning C4047: 'return': 'void *' differs in levels of indirection from 'const int'
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Flight.c(104,46): warning C4047: 'return': 'void *' differs in levels of indirection from 'const int'
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Flight.c(106,43): warning C4047: 'return': 'void *' differs in levels of indirection from 'const int'
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Flight.c(125,3): warning C4033: 'saveFlightToFile' must return a value
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Flight.c(111,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  General.c
+  list.c
+  main.c
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\main.c(26,13): error C2198: 'initManager': too few arguments for call
+  Plane.c
+  Generating Code...
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\Flight.c(128): warning C4715: 'saveFlightToFile': not all control paths return a value
+C:\Users\gabil\Afeka\Programing Systems With C\HW3\H3_Air\H3_Air\AirportManager.c(217): warning C4715: 'readManagerFromFile': not all control paths return a value

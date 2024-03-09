@@ -6,9 +6,13 @@
 #include "AirportManager.h"
 #include "General.h"
 
-int	initManager(AirportManager* pManager)
+int	initManager(AirportManager* pManager, const char* fileName)
 {
-	L_init(&pManager->airportsList);
+	if (!L_init(&pManager->airportsList))
+		return 0;
+
+	if (!readManagerFromFile(pManager, fileName))
+		return 2;
 	return 1;
 }
 
@@ -173,4 +177,60 @@ void	freeAirportArr(AirportManager* pManager)
 		free(pManager->airportsArray[i]);
 	}
 	free(pManager->airportsArray);*/
+}
+
+int saveManagerToFile(const AirportManager* pManager, const char* fileName)
+{
+	FILE* f = fopen(fileName, "w");
+	if (f == NULL)
+	{
+		printf("Failed opening the file. Exiting!\n");
+		return 0;
+	}
+	int size = countAirports(pManager);
+	fprintf(f, "%d", size);
+	NODE* pNode = pManager->airportsList.head.next;
+
+	if (!pNode)
+		return 0;
+
+	while (pNode)
+	{
+		Airport* theAirport = (Airport*)pNode->key;
+		writeAirportToTextFile(f, theAirport);
+		pNode = pNode->next;
+	}
+	fclose(f);
+	return 1;
+}
+
+int readManagerFromFile(const AirportManager* pManager, const char* fileName)
+{
+	FILE* f = fopen(fileName, "r");
+	if (f == NULL)
+	{
+		printf("Failed opening the file. Exiting!\n");
+		return 2;
+	}
+	int size = countAirports(pManager);
+	if (fscanf(f, "%d", &size) != 1)
+	{
+		fclose(f);
+		return 2;
+	}
+	Airport* pPort = (Airport*)calloc(1, sizeof(Airport));
+	if (!pPort)
+		return 2;
+	NODE* pNode = pManager->airportsList.head.next;
+
+	if (!pNode)
+		return 2;
+
+	while (readAirportFromTextFile(f, pPort))
+	{
+		L_insert(pNode, pPort);
+		pNode = pNode->next;
+	}
+	fclose(f);
+	return 1;
 }

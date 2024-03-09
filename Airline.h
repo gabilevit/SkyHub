@@ -9,7 +9,7 @@ typedef enum {
 } eSortType;
 
 static const char* SortTypeStr[eNofSortTypes]
-= { "Not sorted", "Sorted by source code", "Sorted by dest code", "Sorted by Date"};
+= {"Source code", "Dest code", "Date"};
 
 typedef struct
 {
@@ -34,6 +34,13 @@ void	freePlanes(Plane* arr, int size);
 void	freeCompany(Airline* pComp);
 
 eSortType	getSortType();
+void sortFlight(Airline* pComp);
+void sortBySourceCode(Airline* pComp);
+void sortByDestCode(Airline* pComp);
+void sortByDate(Airline* pComp);
+void findFlight(const Airline* pComp);
+int initAirlineFromFile(Airline* pComp, AirportManager* pManager, const char* fileName);
+void saveAirlineToFile(const Airline* pComp, char* fileName);
 
 #endif
 

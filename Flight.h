@@ -21,4 +21,11 @@ void	printFlight(const Flight* pFlight);
 Airport* setAiportToFlight(const AirportManager* pManager, const char* msg);
 int		isPlaneTypeInFlight(const Flight* pFlight, ePlaneType type);
 
+void* compareFlightBySourceCode(const void* pF1, const void* pF2);
+void* compareFlightByDestCode(const void* pF1, const void* pF2);
+void* compareFlightByDate(const void* pF1, const void* pF2);
+
+int saveFlightToFile(FILE* f, Flight* pFlight);
+
+
 #endif

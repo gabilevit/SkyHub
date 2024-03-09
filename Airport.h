@@ -23,5 +23,7 @@ int		compareAirportByAirportCode(const void* v1, const void* v2);
 void    getAirportCode(char* code);
 void	printAirport(const Airport* pPort);
 void	freeAirport(Airport* pPort);
+void writeAirportToTextFile(FILE* f, Airport* pPort);
+int readAirportFromTextFile(FILE* f, Airport* pPort);
 
 #endif

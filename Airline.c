@@ -14,6 +14,7 @@ void	initAirline(Airline* pComp)
 	pComp->flightCount = 0;
 	pComp->planeArr = NULL;
 	pComp->planeCount = 0;
+	pComp->type = eNotSorted;
 }
 
 int	addFlight(Airline* pComp, const AirportManager* pManager)
@@ -45,6 +46,8 @@ int	addFlight(Airline* pComp, const AirportManager* pManager)
 	}
 	pComp->flightArr[pComp->flightCount] = pFlight;
 	pComp->flightCount++;
+
+	pComp->type = eNotSorted;
 	return 1;
 }
 
@@ -79,9 +82,11 @@ void printCompany(const Airline* pComp)
 {
 	printf("Airline %s\n", pComp->name);
 	printf("\n -------- Has %d planes\n", pComp->planeCount);
-	printPlanesArr(pComp->planeArr, pComp->planeCount);
+	generalArrayFunction(pComp->planeArr, pComp->planeCount, sizeof(Plane), printPlane);
+	//printPlanesArr(pComp->planeArr, pComp->planeCount);
 	printf("\n\n -------- Has %d flights\n", pComp->flightCount);
-	printFlightArr(pComp->flightArr, pComp->flightCount);
+	generalArrayFunction(*(pComp->flightArr), pComp->flightCount, sizeof(Flight), printFlight);
+	//printFlightArr(pComp->flightArr, pComp->flightCount);
 }
 
 void	printFlightArr(Flight** arr, int size)
@@ -128,7 +133,9 @@ void	freePlanes(Plane* arr, int size)
 
 void	freeCompany(Airline* pComp)
 {
-	freeFlightArr(pComp->flightArr, pComp->flightCount);
+	//freeFlightArr(pComp->flightArr, pComp->flightCount);
+	generalArrayFunction(pComp->planeArr, pComp->planeCount, sizeof(Plane), free);
+	generalArrayFunction(pComp->flightArr, pComp->flightCount, sizeof(Flight*), free);
 	free(pComp->flightArr);
 	free(pComp->planeArr);
 	free(pComp->name);
@@ -139,11 +146,190 @@ eSortType	getSortType()
 	int option;
 	printf("\n\n");
 	do {
-		printf("Please enter one of the following types\n");
-		for (int i = 0; i < eNofSortTypes; i++)
-			printf("%d for %s\n", i, SortTypeStr[i]);
+		printf("Based on what field do you want to sort?\n");
+		for (int i = 1; i < eNofSortTypes; i++)
+			printf("Enter %d for %s\n", i, SortTypeStr[i - 1]);
 		scanf("%d", &option);
 	} while (option < 0 || option >= eNofSortTypes);
 	getchar();
 	return (eSortType)option;
+}
+
+void sortFlight(Airline* pComp)
+{
+	int type;
+	type = getSortType();
+	switch (type)
+	{
+	case eSortedBySourceCode:
+		sortBySourceCode(pComp);
+		break;
+
+	case eSortedByDestCode:
+		sortByDestCode(pComp);
+		break;
+
+	case eSortedByDate:
+		sortByDate(pComp);
+		break;
+
+	default:
+		printf("Wrong option\n");
+		break;
+	}
+
+	pComp->type = (eSortType)type;
+}
+
+void sortBySourceCode(Airline* pComp)
+{
+	qsort(pComp->flightArr, pComp->flightCount, sizeof(Flight*), compareFlightBySourceCode);
+}
+
+void sortByDestCode(Airline* pComp)
+{
+	qsort(pComp->flightArr, pComp->flightCount, sizeof(Flight*), compareFlightByDestCode);
+}
+
+void sortByDate(Airline* pComp)
+{
+	qsort(pComp->flightArr, pComp->flightCount, sizeof(Flight*), compareFlightByDate);
+}
+
+void findFlight(Airline* pComp)
+{
+	int type = pComp->type;
+	Flight* pFli = NULL;
+	Flight temp;
+	
+	switch (type)
+	{
+	case eNotSorted:
+		printf("NOT sorted yet, cant seacrh");
+		break;
+
+	case eSortedBySourceCode:
+		getAirportCode(temp.sourceCode);
+		pFli = &temp;
+		pFli = *((Flight**)bsearch(&pFli, pComp->flightArr, pComp->flightCount, sizeof(Flight*), compareFlightBySourceCode));
+		if (!pFli)
+			printf("Flight was not found\n");
+		else {
+			printf("Flight found, ");
+			printFlight(pFli);
+		}
+		break;
+
+	case eSortedByDestCode:
+		getAirportCode(temp.destCode);
+		pFli = &temp;
+		pFli = *((Flight**)bsearch(&pFli, pComp->flightArr, pComp->flightCount, sizeof(Flight*), compareFlightByDestCode));
+		if (!pFli)
+			printf("Flight was not found\n");
+		else {
+			printf("Flight found, ");
+			printFlight(pFli);
+		}
+		break;
+
+	case eSortedByDate:
+		getCorrectDate(&temp.date);
+		pFli = &temp;
+		pFli = *((Flight**)bsearch(&pFli, pComp->flightArr, pComp->flightCount, sizeof(Flight*), compareFlightByDate));
+		if (!pFli)
+			printf("Flight was not found\n");
+		else {
+			printf("Flight found, ");
+			printFlight(pFli);
+		}
+		break;
+	default:
+		printf("Wrong option\n");
+		break;
+	}
+}
+
+void saveAirlineToFile(const Airline* pComp, char* fileName)
+{
+	FILE* f = fopen(fileName, "wb");
+	if (!f)
+		return;
+
+	int len = strlen(pComp->name) + 1;
+	if (fwrite(&len, sizeof(int), 1, f) != 1)
+	{
+		fclose(f);
+		return;
+	}
+	if (fwrite(pComp->name, sizeof(char), len, f) != len)
+	{
+		fclose(f);
+		return;
+	}
+	if (fwrite(&pComp->planeCount, sizeof(int), 1, f) != 1)
+	{
+		fclose(f);
+		return;
+	}
+	for (int i = 0; i < pComp->planeCount; i++)
+	{
+		if (!savePlaneToFile(f, &pComp->planeArr[i]))
+		{
+			fclose(f);
+			return;
+		}
+	}
+	if (fwrite(&pComp->flightCount, sizeof(int), 1, f) != 1)
+	{
+		fclose(f);
+		return;
+	}
+	for (int i = 0; i < pComp->flightCount; i++)
+	{
+		if (!saveFlightToFile(f, &pComp->flightArr[i]))
+		{
+			fclose(f);
+			return;
+		}
+	}
+	fclose(f);
+}
+
+int initAirlineFromFile(Airline* pComp, AirportManager* pManager, const char* fileName)
+{
+	FILE* f = fopen(fileName, "r");
+	if (f == NULL)
+	{
+		printf("Failed opening the file. Exiting!\n");
+		return 0;
+	}
+	char tempName[MAX_STR_LEN] = { 0 };
+	if (fscanf(f, "%s %d", tempName, pComp->planeCount) != 2)
+	{
+		fclose(f);
+		return 0;
+	}	
+	pComp->name = _strdup(tempName);
+	if (!pComp->name)
+	{
+		fclose(f);
+		return 0;
+	}
+
+
+	Airport* pPort = (Airport*)calloc(1, sizeof(Airport));
+	if (!pPort)
+		return 2;
+	NODE* pNode = pManager->airportsList.head.next;
+
+	if (!pNode)
+		return 2;
+
+	while (readAirportFromTextFile(f, pPort))
+	{
+		L_insert(pNode, pPort);
+		pNode = pNode->next;
+	}
+	fclose(f);
+	return 1;
 }
